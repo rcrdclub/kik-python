@@ -9,13 +9,13 @@ from kik.messages.text import TextMessage
 from kik.messages.unknown import UnknownMessage
 from kik.messages.video import VideoMessage
 from kik.messages.utils import messages_from_json
-from kik.messages.keyboards import SuggestedResponseKeyboard
-from kik.messages.responses import TextResponse
+from kik.messages.keyboards import SuggestedResponseKeyboard, UnknownKeyboard
+from kik.messages.responses import TextResponse, UnknownResponse
 from kik.messages.attribution import CustomAttribution, PresetAttributions
 from kik.messages.message import Message
 
 
 __all__ = ['TextMessage', 'LinkMessage', 'PictureMessage', 'ScanDataMessage', 'StartChattingMessage', 'StickerMessage',
            'VideoMessage', 'IsTypingMessage', 'ReceiptMessage', 'ReadReceiptMessage', 'DeliveryReceiptMessage',
-           'UnknownMessage', 'SuggestedResponseKeyboard', 'TextResponse', 'messages_from_json', 'CustomAttribution',
-           'PresetAttributions', 'Message']
+           'UnknownMessage', 'SuggestedResponseKeyboard', 'UnknownKeyboard', 'TextResponse', 'UnknownResponse',
+           'messages_from_json', 'CustomAttribution', 'PresetAttributions', 'Message']

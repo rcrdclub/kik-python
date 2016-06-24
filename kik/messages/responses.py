@@ -26,3 +26,30 @@ class TextResponse(SuggestedResponse):
         mapping = super(TextResponse, cls).property_mapping()
         mapping.update({'body': 'body'})
         return mapping
+
+
+class UnknownResponse(SuggestedResponse):
+    """
+    This response type is returned by the response factory when it encounters an unknown response type.
+
+    It's `type` attribute is set to the type of the response, and it's `raw_response` attribute contains the raw JSON
+    response received
+    """
+    @classmethod
+    def from_json(cls, json):
+        response = super(UnknownResponse, cls).from_json(json)
+        response.raw_response = json
+        return response
+
+    @classmethod
+    def property_mapping(cls):
+        mapping = super(UnknownResponse, cls).property_mapping()
+        mapping.update({
+            'type': 'type'
+        })
+        return mapping
+
+
+response_type_mapping = {
+    'text': TextResponse
+}
