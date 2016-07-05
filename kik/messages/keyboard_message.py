@@ -1,5 +1,4 @@
 from kik.messages.keyboards import SuggestedResponseKeyboard, UnknownKeyboard
-
 from kik.messages.message import Message
 
 
