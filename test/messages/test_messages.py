@@ -143,7 +143,7 @@ class KikBotMessagesTest(TestCase):
                         {
                             'type': 'friend-picker',
                             'body': 'foo'
-                         }
+                        }
                     ]
                 }
             ]
@@ -189,7 +189,6 @@ class KikBotMessagesTest(TestCase):
                 }
             ]
         })
-
 
     def test_text_message_delay(self):
         message = TextMessage(body='Some text', to='aleem', delay=1500).to_json()
