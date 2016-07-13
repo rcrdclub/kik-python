@@ -26,3 +26,28 @@ class TextResponse(SuggestedResponse):
         mapping = super(TextResponse, cls).property_mapping()
         mapping.update({'body': 'body'})
         return mapping
+
+
+class FriendPickerResponse(SuggestedResponse):
+    """
+    A friend picker response as documented on https://dev.kik.com/#/docs/messaging#friend-picker-response-object
+    """
+    def __init__(self, body=None, min=None, max=None, preselected=None):
+        super(FriendPickerResponse, self).__init__(type='friend-picker')
+        self.body = body
+        self.min = min
+        self.max = max
+        self.preselected = preselected
+
+    @classmethod
+    def property_mapping(cls):
+        mapping = super(FriendPickerResponse, cls).property_mapping()
+
+        mapping.update({
+            'body': 'body',
+            'min': 'min',
+            'max': 'max',
+            'preselected': 'preselected'
+        })
+
+        return mapping

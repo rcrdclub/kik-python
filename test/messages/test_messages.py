@@ -1,7 +1,7 @@
 from unittest import TestCase
 
 from kik.messages import IsTypingMessage, LinkMessage, PictureMessage, ReadReceiptMessage, TextMessage, VideoMessage, \
-    SuggestedResponseKeyboard, TextResponse, CustomAttribution, PresetAttributions
+    SuggestedResponseKeyboard, TextResponse, FriendPickerResponse, CustomAttribution, PresetAttributions
 
 
 class KikBotMessagesTest(TestCase):
@@ -22,7 +22,7 @@ class KikBotMessagesTest(TestCase):
             'id': '8e7fc0ad-36aa-43dd-8c5f-e72f5f2ed7e0'
         })
 
-    def test_text_message_with_keyboard(self):
+    def test_text_message_with_keyboard_text_response(self):
         message = TextMessage(
             body='Some text',
             to='aleem',
@@ -47,6 +47,144 @@ class KikBotMessagesTest(TestCase):
                     'hidden': True,
                     'responses': [
                         {'type': 'text', 'body': 'Foo'}
+                    ]
+                }
+            ]
+        })
+
+    def test_text_message_with_keyboard_friend_picker_response(self):
+        message = TextMessage(
+            body='Some text',
+            to='aleem',
+            id='8e7fc0ad-36aa-43dd-8c5f-e72f5f2ed7e0',
+            keyboards=[
+                SuggestedResponseKeyboard(
+                    hidden=True,
+                    responses=[
+                        FriendPickerResponse('Foo', 7, 16, ['bar', 'dar'])
+                    ]
+                )
+            ]
+        ).to_json()
+        self.assertEqual(message, {
+            'type': 'text',
+            'to': 'aleem',
+            'body': 'Some text',
+            'id': '8e7fc0ad-36aa-43dd-8c5f-e72f5f2ed7e0',
+            'keyboards': [
+                {
+                    'type': 'suggested',
+                    'hidden': True,
+                    'responses': [
+                        {'type': 'friend-picker',
+                         'body': 'Foo',
+                         'min': 7,
+                         'max': 16,
+                         'preselected': ['bar', 'dar']}
+                    ]
+                }
+            ]
+        })
+
+    def test_text_message_with_keyboard_friend_picker_response_no_params(self):
+        message = TextMessage(
+            body='Some text',
+            to='aleem',
+            id='8e7fc0ad-36aa-43dd-8c5f-e72f5f2ed7e0',
+            keyboards=[
+                SuggestedResponseKeyboard(
+                    hidden=True,
+                    responses=[
+                        FriendPickerResponse()
+                    ]
+                )
+            ]
+        ).to_json()
+        self.assertEqual(message, {
+            'type': 'text',
+            'to': 'aleem',
+            'body': 'Some text',
+            'id': '8e7fc0ad-36aa-43dd-8c5f-e72f5f2ed7e0',
+            'keyboards': [
+                {
+                    'type': 'suggested',
+                    'hidden': True,
+                    'responses': [
+                        {'type': 'friend-picker'}
+                    ]
+                }
+            ]
+        })
+
+    def test_text_message_with_keyboard_friend_picker_response_some_params(self):
+        message = TextMessage(
+            body='Some text',
+            to='aleem',
+            id='8e7fc0ad-36aa-43dd-8c5f-e72f5f2ed7e0',
+            keyboards=[
+                SuggestedResponseKeyboard(
+                    hidden=True,
+                    responses=[
+                        FriendPickerResponse('foo')
+                    ]
+                )
+            ]
+        ).to_json()
+        self.assertEqual(message, {
+            'type': 'text',
+            'to': 'aleem',
+            'body': 'Some text',
+            'id': '8e7fc0ad-36aa-43dd-8c5f-e72f5f2ed7e0',
+            'keyboards': [
+                {
+                    'type': 'suggested',
+                    'hidden': True,
+                    'responses': [
+                        {
+                            'type': 'friend-picker',
+                            'body': 'foo'
+                        }
+                    ]
+                }
+            ]
+        })
+
+    def test_text_message_with_both_keyboard_types(self):
+        message = TextMessage(
+            body='Some text',
+            to='aleem',
+            id='8e7fc0ad-36aa-43dd-8c5f-e72f5f2ed7e0',
+            keyboards=[
+                SuggestedResponseKeyboard(
+                    hidden=True,
+                    responses=[
+                        FriendPickerResponse('Foo', 7, 16, ['bar', 'dar']),
+                        TextResponse('Bar')
+                    ]
+                )
+            ]
+        ).to_json()
+        self.assertEqual(message, {
+            'type': 'text',
+            'to': 'aleem',
+            'body': 'Some text',
+            'id': '8e7fc0ad-36aa-43dd-8c5f-e72f5f2ed7e0',
+            'keyboards': [
+                {
+                    'type': 'suggested',
+                    'hidden': True,
+                    'responses': [
+                        {
+                            'type': 'friend-picker',
+                            'body': 'Foo',
+                            'min': 7,
+                            'max': 16,
+                            'preselected': ['bar', 'dar']
+                        },
+                        {
+                            'type': 'text',
+                            'body': 'Bar'
+                        }
                     ]
                 }
             ]
