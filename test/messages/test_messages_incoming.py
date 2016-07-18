@@ -2,7 +2,7 @@ from unittest import TestCase
 
 from kik.messages import VideoMessage, UnknownMessage, TextMessage, StartChattingMessage, StickerMessage, \
     ScanDataMessage, PictureMessage, LinkMessage, IsTypingMessage, ReadReceiptMessage, DeliveryReceiptMessage, \
-    SuggestedResponseKeyboard, TextResponse
+    SuggestedResponseKeyboard, TextResponse, FriendPickerResponse
 
 
 class KikBotMessagesIncomingTest(TestCase):
@@ -294,6 +294,13 @@ class KikBotMessagesIncomingTest(TestCase):
                         {
                             'type': 'text',
                             'body': 'No way!'
+                        },
+                        {
+                            'type': 'friend-picker',
+                            'body': 'Pick a friend!',
+                            'min': 1,
+                            'max': 5,
+                            'preselected': ['foo', 'bar']
                         }
                     ]
                 }
@@ -307,7 +314,9 @@ class KikBotMessagesIncomingTest(TestCase):
         self.assertEqual(message.id, '8e7fc0ad-36aa-43dd-8c5f-e72f5f2ed7e0')
         self.assertEqual(message.timestamp, 1458336131)
         self.assertIs(True, message.read_receipt_requested)
-        responses = [TextResponse('Ok!'), TextResponse('No way!')]
+        responses = [
+            TextResponse('Ok!'), TextResponse('No way!'), FriendPickerResponse('Pick a friend!', 1, 5, ['foo', 'bar'])
+        ]
         self.assertEqual(message.keyboards, [SuggestedResponseKeyboard(to='aleem', hidden=False, responses=responses)])
 
     def test_unknown_keyboard_message(self):
