@@ -17,6 +17,7 @@ class MessageUtilsTest(TestCase):
         self.assertEqual(output[0].type, 'text')
         self.assertEqual(output[0].from_user, 'aleem')
         self.assertEqual(output[0].body, 'Yo text message!')
+        self.assertEqual(input[0]['type'], 'text')
 
     def test_multiple_elements(self):
         input = [{'type': 'text', 'from': 'aleem', 'body': 'Yo text message!'},
@@ -27,10 +28,12 @@ class MessageUtilsTest(TestCase):
         self.assertEqual(output[0].type, 'text')
         self.assertEqual(output[0].from_user, 'aleem')
         self.assertEqual(output[0].body, 'Yo text message!')
+        self.assertEqual(input[0]['type'], 'text')
         self.assertIsInstance(output[1], LinkMessage)
         self.assertEqual(output[1].type, 'link')
         self.assertEqual(output[1].from_user, 'laura')
         self.assertEqual(output[1].url, 'http://yo.text/message')
+        self.assertEqual(input[1]['type'], 'link')
 
     def test_unknown_message(self):
         input = [{'type': 'some-unknown-type', 'from': 'aleem', 'to': 'laura', 'someProperty': 'aValue'}]
@@ -41,3 +44,4 @@ class MessageUtilsTest(TestCase):
         self.assertEqual(output[0].from_user, 'aleem')
         self.assertEqual(output[0].to, 'laura')
         self.assertEqual(output[0].raw_message, input[0])
+        self.assertEqual(input[0]['type'], 'some-unknown-type')
