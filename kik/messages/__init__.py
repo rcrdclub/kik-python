@@ -19,5 +19,5 @@ from kik.messages.message import Message
 __all__ = ['TextMessage', 'LinkMessage', 'PictureMessage', 'ScanDataMessage', 'StartChattingMessage', 'StickerMessage',
            'VideoMessage', 'IsTypingMessage', 'ReceiptMessage', 'ReadReceiptMessage', 'DeliveryReceiptMessage',
            'UnknownMessage', 'SuggestedResponseKeyboard', 'UnknownKeyboard', 'TextResponse', 'FriendPickerResponse',
-           'UnknownResponse', 'messages_from_json', 'CustomAttribution', 'PresetAttributions', 'Message', 
+           'UnknownResponse', 'messages_from_json', 'CustomAttribution', 'PresetAttributions', 'Message',
            'FriendPickerMessage']
