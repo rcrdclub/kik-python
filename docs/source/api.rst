@@ -64,6 +64,8 @@ These classes directly mirror the `message types used by the API <https://dev.ki
 
 .. autoclass:: kik.messages.ReadReceiptMessage
 
+.. autoclass:: kik.messages.FriendPickerMessage
+
 .. autoclass:: kik.messages.UnknownMessage
 
 Message Utilities
@@ -101,6 +103,10 @@ Keyboards and Responses
 .. autoclass:: kik.messages.responses.SuggestedResponse
 
 .. autoclass:: kik.messages.TextResponse
+   :members:
+   :show-inheritance:
+
+.. autoclass:: kik.messages.FriendPickerResponse
    :members:
    :show-inheritance:
 
