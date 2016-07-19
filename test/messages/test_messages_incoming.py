@@ -1,7 +1,8 @@
 from unittest import TestCase
 
 from kik.messages import VideoMessage, UnknownMessage, TextMessage, StartChattingMessage, StickerMessage, \
-    ScanDataMessage, PictureMessage, LinkMessage, IsTypingMessage, ReadReceiptMessage, DeliveryReceiptMessage
+    ScanDataMessage, PictureMessage, LinkMessage, IsTypingMessage, ReadReceiptMessage, DeliveryReceiptMessage, \
+    SuggestedResponseKeyboard, TextResponse, FriendPickerResponse, FriendPickerMessage
 
 
 class KikBotMessagesIncomingTest(TestCase):
@@ -247,6 +248,27 @@ class KikBotMessagesIncomingTest(TestCase):
         self.assertEqual(message.timestamp, 1458336131)
         self.assertIs(False, message.read_receipt_requested)
 
+    def test_friend_picker_message_incoming(self):
+        message = FriendPickerMessage.from_json({
+            'from': 'aleem',
+            'participants': ['aleem'],
+            'mention': None,
+            'chatId': 'c3ab8ff13720e8ad9047dd39466b3c8974e592c2fa383d4a3960714caef0c4f2',
+            'picked': ['foobar'],
+            'id': '8e7fc0ad-36aa-43dd-8c5f-e72f5f2ed7e0',
+            'timestamp': 1458336131,
+            'readReceiptRequested': False
+        })
+
+        self.assertEqual(message.from_user, 'aleem')
+        self.assertEqual(message.participants, ['aleem'])
+        self.assertIs(None, message.mention)
+        self.assertEqual(message.chat_id, 'c3ab8ff13720e8ad9047dd39466b3c8974e592c2fa383d4a3960714caef0c4f2')
+        self.assertEqual(message.picked, ['foobar'])
+        self.assertEqual(message.id, '8e7fc0ad-36aa-43dd-8c5f-e72f5f2ed7e0')
+        self.assertEqual(message.timestamp, 1458336131)
+        self.assertIs(False, message.read_receipt_requested)
+
     def test_unknown_message_incoming(self):
         message_json = {
             'type': 'some-unknown-type',
@@ -270,3 +292,114 @@ class KikBotMessagesIncomingTest(TestCase):
         self.assertEqual(message.id, '8e7fc0ad-36aa-43dd-8c5f-e72f5f2ed7e0')
         self.assertEqual(message.timestamp, 1458336131)
         self.assertIs(False, message.read_receipt_requested)
+
+    def test_suggested_keyboard_message(self):
+        message = TextMessage.from_json({
+            'to': 'aleem',
+            'participants': ['aleem'],
+            'chatId': 'c3ab8ff13720e8ad9047dd39466b3c8974e592c2fa383d4a3960714caef0c4f2',
+            'body': 'Some text',
+            'id': '8e7fc0ad-36aa-43dd-8c5f-e72f5f2ed7e0',
+            'timestamp': 1458336131,
+            'readReceiptRequested': True,
+            'keyboards': [
+                {
+                    'to': 'aleem',
+                    'type': 'suggested',
+                    'hidden': False,
+                    'responses': [
+                        {
+                            'type': 'text',
+                            'body': 'Ok!'
+                        },
+                        {
+                            'type': 'text',
+                            'body': 'No way!'
+                        },
+                        {
+                            'type': 'friend-picker',
+                            'body': 'Pick a friend!',
+                            'min': 1,
+                            'max': 5,
+                            'preselected': ['foo', 'bar']
+                        }
+                    ]
+                }
+            ]
+        })
+
+        self.assertEqual(message.to, 'aleem')
+        self.assertEqual(message.participants, ['aleem'])
+        self.assertEqual(message.chat_id, 'c3ab8ff13720e8ad9047dd39466b3c8974e592c2fa383d4a3960714caef0c4f2')
+        self.assertEqual(message.body, 'Some text')
+        self.assertEqual(message.id, '8e7fc0ad-36aa-43dd-8c5f-e72f5f2ed7e0')
+        self.assertEqual(message.timestamp, 1458336131)
+        self.assertIs(True, message.read_receipt_requested)
+        responses = [
+            TextResponse('Ok!'), TextResponse('No way!'), FriendPickerResponse('Pick a friend!', 1, 5, ['foo', 'bar'])
+        ]
+        self.assertEqual(message.keyboards, [SuggestedResponseKeyboard(to='aleem', hidden=False, responses=responses)])
+
+    def test_unknown_keyboard_message(self):
+        keyboard_json = {'to': 'aleem', 'type': 'some-unknown-type', 'hidden': False}
+        message = TextMessage.from_json({
+            'to': 'aleem',
+            'participants': ['aleem'],
+            'chatId': 'c3ab8ff13720e8ad9047dd39466b3c8974e592c2fa383d4a3960714caef0c4f2',
+            'body': 'Some text',
+            'id': '8e7fc0ad-36aa-43dd-8c5f-e72f5f2ed7e0',
+            'timestamp': 1458336131,
+            'readReceiptRequested': True,
+            'keyboards': [keyboard_json]
+        })
+
+        self.assertEqual(message.to, 'aleem')
+        self.assertEqual(message.participants, ['aleem'])
+        self.assertEqual(message.chat_id, 'c3ab8ff13720e8ad9047dd39466b3c8974e592c2fa383d4a3960714caef0c4f2')
+        self.assertEqual(message.body, 'Some text')
+        self.assertEqual(message.id, '8e7fc0ad-36aa-43dd-8c5f-e72f5f2ed7e0')
+        self.assertEqual(message.timestamp, 1458336131)
+        self.assertIs(True, message.read_receipt_requested)
+        self.assertIsInstance(message.keyboards, list)
+        self.assertEqual(len(message.keyboards), 1)
+        self.assertEqual(message.keyboards[0].to, 'aleem')
+        self.assertEqual(message.keyboards[0].type, 'some-unknown-type')
+        self.assertEqual(message.keyboards[0].hidden, False)
+        self.assertEqual(message.keyboards[0].raw_keyboard, keyboard_json)
+
+    def test_unknown_suggested_response(self):
+        response_json = {'type': 'some-unknown-type', 'prop': 'Ok!'}
+        message = TextMessage.from_json({
+            'to': 'aleem',
+            'participants': ['aleem'],
+            'chatId': 'c3ab8ff13720e8ad9047dd39466b3c8974e592c2fa383d4a3960714caef0c4f2',
+            'body': 'Some text',
+            'id': '8e7fc0ad-36aa-43dd-8c5f-e72f5f2ed7e0',
+            'timestamp': 1458336131,
+            'readReceiptRequested': True,
+            'keyboards': [
+                {
+                    'to': 'aleem',
+                    'type': 'suggested',
+                    'hidden': False,
+                    'responses': [response_json]
+                }
+            ]
+        })
+
+        self.assertEqual(message.to, 'aleem')
+        self.assertEqual(message.participants, ['aleem'])
+        self.assertEqual(message.chat_id, 'c3ab8ff13720e8ad9047dd39466b3c8974e592c2fa383d4a3960714caef0c4f2')
+        self.assertEqual(message.body, 'Some text')
+        self.assertEqual(message.id, '8e7fc0ad-36aa-43dd-8c5f-e72f5f2ed7e0')
+        self.assertEqual(message.timestamp, 1458336131)
+        self.assertIs(True, message.read_receipt_requested)
+        self.assertIsInstance(message.keyboards, list)
+        self.assertEqual(len(message.keyboards), 1)
+        self.assertEqual(message.keyboards[0].to, 'aleem')
+        self.assertEqual(message.keyboards[0].type, 'suggested')
+        self.assertEqual(message.keyboards[0].hidden, False)
+        self.assertIsInstance(message.keyboards[0].responses, list)
+        self.assertEqual(len(message.keyboards[0].responses), 1)
+        self.assertEqual(message.keyboards[0].responses[0].type, 'some-unknown-type')
+        self.assertEqual(message.keyboards[0].responses[0].raw_response, response_json)

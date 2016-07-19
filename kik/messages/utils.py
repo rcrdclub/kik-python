@@ -1,5 +1,6 @@
 from kik.messages import TextMessage, LinkMessage, PictureMessage, VideoMessage, StartChattingMessage, \
-    ScanDataMessage, StickerMessage, IsTypingMessage, DeliveryReceiptMessage, ReadReceiptMessage, UnknownMessage
+    ScanDataMessage, StickerMessage, IsTypingMessage, DeliveryReceiptMessage, ReadReceiptMessage, UnknownMessage, \
+    FriendPickerMessage
 
 incoming_type_mapping = {
     'text': TextMessage,
@@ -11,7 +12,8 @@ incoming_type_mapping = {
     'sticker': StickerMessage,
     'is-typing': IsTypingMessage,
     'delivery-receipt': DeliveryReceiptMessage,
-    'read-receipt': ReadReceiptMessage
+    'read-receipt': ReadReceiptMessage,
+    'friend-picker': FriendPickerMessage
 }
 
 
@@ -26,9 +28,11 @@ def messages_from_json(messages):
     """
     message_objects = []
     for message in messages:
-        msg_type = incoming_type_mapping.get(message['type'], UnknownMessage)
-        if msg_type is not UnknownMessage:
+        msg_type = message['type']
+        msg_cls = incoming_type_mapping.get(msg_type, UnknownMessage)
+        if msg_cls is not UnknownMessage:
             # Unknown message types want to keep the type param, as it's not otherwise accessible.
             del message['type']
-        message_objects.append(msg_type.from_json(message))
+        message_objects.append(msg_cls.from_json(message))
+        message['type'] = msg_type
     return message_objects
