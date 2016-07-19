@@ -1,18 +1,18 @@
 # Release History
 
-## v.1.1.0
+## v1.1.0
 - Added support for Friend Picker actions
 - Including keyboards when parsing messages from JSON
 - Keep messages_from_json from deleting the `type` key
 
-## v.1.0.7
+## v1.0.7
 - Bugfix for KikApi.verify_signature in Python 3
 
-## v.1.0.6
+## v1.0.6
 - Bugfix for setting configurations with no features
 - Added configuration to the example bot
 
-## v.1.0.5
+## v1.0.5
 - Fix installation error due to missing README
 
 ## v1.0.4
