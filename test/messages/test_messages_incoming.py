@@ -2,7 +2,7 @@ from unittest import TestCase
 
 from kik.messages import VideoMessage, UnknownMessage, TextMessage, StartChattingMessage, StickerMessage, \
     ScanDataMessage, PictureMessage, LinkMessage, IsTypingMessage, ReadReceiptMessage, DeliveryReceiptMessage, \
-    SuggestedResponseKeyboard, TextResponse, FriendPickerResponse
+    SuggestedResponseKeyboard, TextResponse, FriendPickerResponse, FriendPickerMessage
 
 
 class KikBotMessagesIncomingTest(TestCase):
@@ -244,6 +244,27 @@ class KikBotMessagesIncomingTest(TestCase):
         self.assertIs(None, message.mention)
         self.assertEqual(message.chat_id, 'c3ab8ff13720e8ad9047dd39466b3c8974e592c2fa383d4a3960714caef0c4f2')
         self.assertEqual(message.message_ids, ['ff3ea373-576c-45d4-bdcd-9956a156301d'])
+        self.assertEqual(message.id, '8e7fc0ad-36aa-43dd-8c5f-e72f5f2ed7e0')
+        self.assertEqual(message.timestamp, 1458336131)
+        self.assertIs(False, message.read_receipt_requested)
+
+    def test_friend_picker_message_incoming(self):
+        message = FriendPickerMessage.from_json({
+            'from': 'aleem',
+            'participants': ['aleem'],
+            'mention': None,
+            'chatId': 'c3ab8ff13720e8ad9047dd39466b3c8974e592c2fa383d4a3960714caef0c4f2',
+            'picked': ['foobar'],
+            'id': '8e7fc0ad-36aa-43dd-8c5f-e72f5f2ed7e0',
+            'timestamp': 1458336131,
+            'readReceiptRequested': False
+        })
+
+        self.assertEqual(message.from_user, 'aleem')
+        self.assertEqual(message.participants, ['aleem'])
+        self.assertIs(None, message.mention)
+        self.assertEqual(message.chat_id, 'c3ab8ff13720e8ad9047dd39466b3c8974e592c2fa383d4a3960714caef0c4f2')
+        self.assertEqual(message.picked, ['foobar'])
         self.assertEqual(message.id, '8e7fc0ad-36aa-43dd-8c5f-e72f5f2ed7e0')
         self.assertEqual(message.timestamp, 1458336131)
         self.assertIs(False, message.read_receipt_requested)

@@ -140,10 +140,7 @@ class KikBotMessagesTest(TestCase):
                     'type': 'suggested',
                     'hidden': True,
                     'responses': [
-                        {
-                            'type': 'friend-picker',
-                            'body': 'foo'
-                        }
+                        {'type': 'friend-picker', 'body': 'foo'}
                     ]
                 }
             ]

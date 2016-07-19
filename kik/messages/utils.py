@@ -1,5 +1,6 @@
 from kik.messages import TextMessage, LinkMessage, PictureMessage, VideoMessage, StartChattingMessage, \
-    ScanDataMessage, StickerMessage, IsTypingMessage, DeliveryReceiptMessage, ReadReceiptMessage, UnknownMessage
+    ScanDataMessage, StickerMessage, IsTypingMessage, DeliveryReceiptMessage, ReadReceiptMessage, UnknownMessage, \
+    FriendPickerMessage
 
 incoming_type_mapping = {
     'text': TextMessage,
@@ -11,7 +12,8 @@ incoming_type_mapping = {
     'sticker': StickerMessage,
     'is-typing': IsTypingMessage,
     'delivery-receipt': DeliveryReceiptMessage,
-    'read-receipt': ReadReceiptMessage
+    'read-receipt': ReadReceiptMessage,
+    'friend-picker': FriendPickerMessage
 }
 
 
