@@ -201,5 +201,5 @@ class KikBotApiTest(TestCase):
         self.assertEqual(response.features, {'manuallySendReadReceipts': True})
 
     def test_verify_signature(self):
-        self.assertTrue(self.api.verify_signature('AC18D0105C2C257652859322B0499313342C6EB9', b'body'))
-        self.assertFalse(self.api.verify_signature('fakesig', b'body'))
+        self.assertIs(True, self.api.verify_signature('AC18D0105C2C257652859322B0499313342C6EB9', b'body'))
+        self.assertIs(False, self.api.verify_signature('fakesig', b'body'))
