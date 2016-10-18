@@ -1,4 +1,4 @@
-from kik.messages.keyboards import UnknownKeyboard, keyboard_from_json
+from kik.messages.keyboards import keyboard_from_json
 from kik.messages.message import Message
 
 
