@@ -11,7 +11,7 @@ class Configuration(Resource):
     :param features: Feature flags to set
     :type features: dict
     :param static_keyboard: The static keyboard to set
-    :type static_keyboard: kik.messages.Keyboard
+    :type static_keyboard: kik.messages.keyboards.Keyboard
     """
     def __init__(self, webhook, features=None, static_keyboard=None):
         self.webhook = webhook
