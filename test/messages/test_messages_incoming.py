@@ -20,7 +20,7 @@ class KikBotMessagesIncomingTest(TestCase):
 
         self.assertEqual(message.from_user, 'aleem')
         self.assertEqual(message.participants, ['aleem'])
-        self.assertIs(None, message.mention)
+        self.assertIsNone(message.mention)
         self.assertEqual(message.chat_id, 'c3ab8ff13720e8ad9047dd39466b3c8974e592c2fa383d4a3960714caef0c4f2')
         self.assertEqual(message.body, 'Some text')
         self.assertEqual(message.id, '8e7fc0ad-36aa-43dd-8c5f-e72f5f2ed7e0')
@@ -49,7 +49,7 @@ class KikBotMessagesIncomingTest(TestCase):
 
         self.assertEqual(message.from_user, 'aleem')
         self.assertEqual(message.participants, ['aleem'])
-        self.assertIs(None, message.mention)
+        self.assertIsNone(message.mention)
         self.assertEqual(message.chat_id, 'c3ab8ff13720e8ad9047dd39466b3c8974e592c2fa383d4a3960714caef0c4f2')
         self.assertEqual(message.url, 'http://foo.bar')
         self.assertEqual(message.title, 'A Title')
@@ -80,7 +80,7 @@ class KikBotMessagesIncomingTest(TestCase):
 
         self.assertEqual(message.from_user, 'aleem')
         self.assertEqual(message.participants, ['aleem'])
-        self.assertIs(None, message.mention)
+        self.assertIsNone(message.mention)
         self.assertEqual(message.chat_id, 'c3ab8ff13720e8ad9047dd39466b3c8974e592c2fa383d4a3960714caef0c4f2')
         self.assertEqual(message.pic_url, 'http://foo.bar/image')
         self.assertEqual(message.attribution.name, 'Webpage')
@@ -110,7 +110,7 @@ class KikBotMessagesIncomingTest(TestCase):
 
         self.assertEqual(message.from_user, 'aleem')
         self.assertEqual(message.participants, ['aleem'])
-        self.assertIs(None, message.mention)
+        self.assertIsNone(message.mention)
         self.assertEqual(message.chat_id, 'c3ab8ff13720e8ad9047dd39466b3c8974e592c2fa383d4a3960714caef0c4f2')
         self.assertEqual(message.video_url, 'http://foo.bar/vid')
         self.assertIs(False, message.muted)
@@ -135,7 +135,7 @@ class KikBotMessagesIncomingTest(TestCase):
 
         self.assertEqual(message.from_user, 'aleem')
         self.assertEqual(message.participants, ['aleem'])
-        self.assertIs(None, message.mention)
+        self.assertIsNone(message.mention)
         self.assertEqual(message.chat_id, 'c3ab8ff13720e8ad9047dd39466b3c8974e592c2fa383d4a3960714caef0c4f2')
         self.assertEqual(message.id, '8e7fc0ad-36aa-43dd-8c5f-e72f5f2ed7e0')
         self.assertEqual(message.timestamp, 1458336131)
@@ -156,7 +156,7 @@ class KikBotMessagesIncomingTest(TestCase):
 
         self.assertEqual(message.from_user, 'aleem')
         self.assertEqual(message.participants, ['aleem'])
-        self.assertIs(None, message.mention)
+        self.assertIsNone(message.mention)
         self.assertEqual(message.chat_id, 'c3ab8ff13720e8ad9047dd39466b3c8974e592c2fa383d4a3960714caef0c4f2')
         self.assertEqual(message.sticker_pack_id, 'memes')
         self.assertEqual(message.sticker_url, 'http://cards-sticker-dev.herokuapp.com/stickers/memes/okay.png')
@@ -178,7 +178,7 @@ class KikBotMessagesIncomingTest(TestCase):
 
         self.assertEqual(message.from_user, 'aleem')
         self.assertEqual(message.participants, ['aleem'])
-        self.assertIs(None, message.mention)
+        self.assertIsNone(message.mention)
         self.assertEqual(message.chat_id, 'c3ab8ff13720e8ad9047dd39466b3c8974e592c2fa383d4a3960714caef0c4f2')
         self.assertEqual(message.data, 'foobar')
         self.assertEqual(message.id, '8e7fc0ad-36aa-43dd-8c5f-e72f5f2ed7e0')
@@ -199,7 +199,7 @@ class KikBotMessagesIncomingTest(TestCase):
 
         self.assertEqual(message.from_user, 'aleem')
         self.assertEqual(message.participants, ['aleem'])
-        self.assertIs(None, message.mention)
+        self.assertIsNone(message.mention)
         self.assertEqual(message.chat_id, 'c3ab8ff13720e8ad9047dd39466b3c8974e592c2fa383d4a3960714caef0c4f2')
         self.assertIs(True, message.is_typing)
         self.assertEqual(message.id, '8e7fc0ad-36aa-43dd-8c5f-e72f5f2ed7e0')
@@ -220,7 +220,7 @@ class KikBotMessagesIncomingTest(TestCase):
 
         self.assertEqual(message.from_user, 'aleem')
         self.assertEqual(message.participants, ['aleem'])
-        self.assertIs(None, message.mention)
+        self.assertIsNone(message.mention)
         self.assertEqual(message.chat_id, 'c3ab8ff13720e8ad9047dd39466b3c8974e592c2fa383d4a3960714caef0c4f2')
         self.assertEqual(message.message_ids, ['ff3ea373-576c-45d4-bdcd-9956a156301d'])
         self.assertEqual(message.id, '8e7fc0ad-36aa-43dd-8c5f-e72f5f2ed7e0')
@@ -241,7 +241,7 @@ class KikBotMessagesIncomingTest(TestCase):
 
         self.assertEqual(message.from_user, 'aleem')
         self.assertEqual(message.participants, ['aleem'])
-        self.assertIs(None, message.mention)
+        self.assertIsNone(message.mention)
         self.assertEqual(message.chat_id, 'c3ab8ff13720e8ad9047dd39466b3c8974e592c2fa383d4a3960714caef0c4f2')
         self.assertEqual(message.message_ids, ['ff3ea373-576c-45d4-bdcd-9956a156301d'])
         self.assertEqual(message.id, '8e7fc0ad-36aa-43dd-8c5f-e72f5f2ed7e0')
@@ -262,7 +262,7 @@ class KikBotMessagesIncomingTest(TestCase):
 
         self.assertEqual(message.from_user, 'aleem')
         self.assertEqual(message.participants, ['aleem'])
-        self.assertIs(None, message.mention)
+        self.assertIsNone(message.mention)
         self.assertEqual(message.chat_id, 'c3ab8ff13720e8ad9047dd39466b3c8974e592c2fa383d4a3960714caef0c4f2')
         self.assertEqual(message.picked, ['foobar'])
         self.assertEqual(message.id, '8e7fc0ad-36aa-43dd-8c5f-e72f5f2ed7e0')
@@ -286,7 +286,7 @@ class KikBotMessagesIncomingTest(TestCase):
         self.assertEqual(message.type, 'some-unknown-type')
         self.assertEqual(message.from_user, 'aleem')
         self.assertEqual(message.participants, ['aleem'])
-        self.assertIs(None, message.mention)
+        self.assertIsNone(message.mention)
         self.assertEqual(message.chat_id, 'c3ab8ff13720e8ad9047dd39466b3c8974e592c2fa383d4a3960714caef0c4f2')
         self.assertEqual(message.raw_message, message_json)
         self.assertEqual(message.id, '8e7fc0ad-36aa-43dd-8c5f-e72f5f2ed7e0')

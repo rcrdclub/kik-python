@@ -5,7 +5,7 @@ import mock
 import requests
 
 from kik import KikApi, KikError, Code, Configuration, User
-from kik.messages import TextMessage
+from kik.messages import TextMessage, SuggestedResponseKeyboard, TextResponse
 
 
 def _response(status_code, content):
@@ -156,6 +156,15 @@ class KikBotApiTest(TestCase):
         'webhook': 'https://example.com/incoming',
         'features': {
             'manuallySendReadReceipts': True
+        },
+        'staticKeyboard': {
+            'type': 'suggested',
+            'responses': [
+                {
+                    'type': 'text',
+                    'body': 'foo'
+                }
+            ]
         }
     }).encode('utf-8')))
     def test_get_configuration(self, get):
@@ -167,19 +176,40 @@ class KikBotApiTest(TestCase):
             auth=('mybotusername', 'mybotapikey')
         )
 
+        self.assertIsInstance(config, Configuration)
         self.assertEqual(config.webhook, 'https://example.com/incoming')
         self.assertEqual(config.features, {'manuallySendReadReceipts': True})
+        self.assertIsInstance(config.static_keyboard, SuggestedResponseKeyboard)
+        self.assertEqual(config.static_keyboard, SuggestedResponseKeyboard(
+            responses=[
+                TextResponse('foo')
+            ]
+        ))
 
     @mock.patch('requests.post', return_value=_response(200, json.dumps({
         'webhook': 'https://example.com/incoming',
         'features': {
             'manuallySendReadReceipts': True
+        },
+        'staticKeyboard': {
+            'type': 'suggested',
+            'responses': [
+                {
+                    'type': 'text',
+                    'body': 'foo'
+                }
+            ]
         }
     }).encode('utf-8')))
     def test_set_configuration(self, post):
         config = Configuration(
             webhook='https://example.com/incoming',
-            features={'manuallySendReadReceipts': True}
+            features={'manuallySendReadReceipts': True},
+            static_keyboard=SuggestedResponseKeyboard(
+                responses=[
+                    TextResponse('foo')
+                ]
+            )
         )
 
         response = self.api.set_configuration(config)
@@ -193,13 +223,28 @@ class KikBotApiTest(TestCase):
             'webhook': 'https://example.com/incoming',
             'features': {
                 'manuallySendReadReceipts': True
+            },
+            'staticKeyboard': {
+                'type': 'suggested',
+                'responses': [
+                    {
+                        'type': 'text',
+                        'body': 'foo'
+                    }
+                ]
             }
         })
 
         self.assertIsInstance(response, Configuration)
         self.assertEqual(response.webhook, 'https://example.com/incoming')
         self.assertEqual(response.features, {'manuallySendReadReceipts': True})
+        self.assertIsInstance(response.static_keyboard, SuggestedResponseKeyboard)
+        self.assertEqual(response.static_keyboard, SuggestedResponseKeyboard(
+            responses=[
+                TextResponse('foo')
+            ]
+        ))
 
     def test_verify_signature(self):
-        self.assertTrue(self.api.verify_signature('AC18D0105C2C257652859322B0499313342C6EB9', b'body'))
-        self.assertFalse(self.api.verify_signature('fakesig', b'body'))
+        self.assertIs(True, self.api.verify_signature('AC18D0105C2C257652859322B0499313342C6EB9', b'body'))
+        self.assertIs(False, self.api.verify_signature('fakesig', b'body'))

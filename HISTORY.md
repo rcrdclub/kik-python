@@ -1,5 +1,8 @@
 # Release History
 
+## v1.2.0
+- Added support for static keyboards in configuration
+
 ## v1.1.0
 - Added support for Friend Picker actions
 - Including keyboards when parsing messages from JSON
