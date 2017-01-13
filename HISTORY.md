@@ -1,5 +1,8 @@
 # Release History
 
+## v1.3.0
+- Added the timezone to user profiles
+
 ## v1.2.0
 - Added support for static keyboards in configuration
 
