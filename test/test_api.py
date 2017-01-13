@@ -89,6 +89,7 @@ class KikBotApiTest(TestCase):
         'firstName': 'First',
         'lastName': 'Last',
         'profilePicUrl': 'http://foo.bar/profile',
+        'timezone': 'America/Toronto',
         'profilePicLastModified': 1458657367
     }).encode('utf-8')))
     def test_get_user_profile(self, get):
@@ -103,6 +104,7 @@ class KikBotApiTest(TestCase):
         self.assertIsInstance(user, User)
         self.assertEqual(user.first_name, 'First')
         self.assertEqual(user.last_name, 'Last')
+        self.assertEqual(user.timezone, 'America/Toronto')
         self.assertEqual(user.profile_pic_url, 'http://foo.bar/profile')
         self.assertEqual(user.profile_pic_last_modified, 1458657367)
 

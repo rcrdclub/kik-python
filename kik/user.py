@@ -14,13 +14,17 @@ class User(Resource):
     :ivar profile_pic_last_modified: Timestamp indicating when the user's profile picture was
         last modified, to allow for caching
     :vartype: profile_last_modified: int
+    :ivar timezone: String indicating the timezone of the user (ex. America/Toronto)
+    :vartype: timezone: str
     """
-    def __init__(self, first_name, last_name, profile_pic_url=None, profile_pic_last_modified=None, **kwargs):
+    def __init__(self, first_name, last_name, profile_pic_url=None, profile_pic_last_modified=None, timezone=None,
+                 **kwargs):
         super(User, self).__init__()
         self.first_name = first_name
         self.last_name = last_name
         self.profile_pic_url = profile_pic_url
         self.profile_pic_last_modified = profile_pic_last_modified
+        self.timezone = timezone
 
     @classmethod
     def property_mapping(cls):
@@ -28,6 +32,7 @@ class User(Resource):
             'first_name': 'firstName',
             'last_name': 'lastName',
             'profile_pic_url': 'profilePicUrl',
-            'profile_pic_last_modified': 'profilePicLastModified'
+            'profile_pic_last_modified': 'profilePicLastModified',
+            'timezone': 'timezone'
         }
         return mapping
