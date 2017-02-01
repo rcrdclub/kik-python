@@ -1,7 +1,8 @@
 from unittest import TestCase
 
 from kik.messages import IsTypingMessage, LinkMessage, PictureMessage, ReadReceiptMessage, TextMessage, VideoMessage, \
-    SuggestedResponseKeyboard, TextResponse, FriendPickerResponse, CustomAttribution, PresetAttributions
+    SuggestedResponseKeyboard, TextResponse, FriendPickerResponse, PictureResponse, CustomAttribution, \
+    PresetAttributions
 
 
 class KikBotMessagesTest(TestCase):
@@ -146,7 +147,7 @@ class KikBotMessagesTest(TestCase):
             ]
         })
 
-    def test_text_message_with_both_keyboard_types(self):
+    def test_text_message_with_keyboard_picture_response(self):
         message = TextMessage(
             body='Some text',
             to='aleem',
@@ -155,6 +156,39 @@ class KikBotMessagesTest(TestCase):
                 SuggestedResponseKeyboard(
                     hidden=True,
                     responses=[
+                        PictureResponse('http://foo.bar', {'some': 'data'}),
+                        PictureResponse('http://foo.bar', "some data")
+                    ]
+                )
+            ]
+        ).to_json()
+        self.assertEqual(message, {
+            'type': 'text',
+            'to': 'aleem',
+            'body': 'Some text',
+            'id': '8e7fc0ad-36aa-43dd-8c5f-e72f5f2ed7e0',
+            'keyboards': [
+                {
+                    'type': 'suggested',
+                    'hidden': True,
+                    'responses': [
+                        {'type': 'picture', 'picUrl': 'http://foo.bar', 'metadata': {'some': 'data'}},
+                        {'type': 'picture', 'picUrl': 'http://foo.bar', 'metadata': "some data"}
+                    ]
+                }
+            ]
+        })
+
+    def test_text_message_with_all_keyboard_types(self):
+        message = TextMessage(
+            body='Some text',
+            to='aleem',
+            id='8e7fc0ad-36aa-43dd-8c5f-e72f5f2ed7e0',
+            keyboards=[
+                SuggestedResponseKeyboard(
+                    hidden=True,
+                    responses=[
+                        PictureResponse('http://foo.bar', {'some': 'data'}),
                         FriendPickerResponse('Foo', 7, 16, ['bar', 'dar']),
                         TextResponse('Bar')
                     ]
@@ -171,6 +205,13 @@ class KikBotMessagesTest(TestCase):
                     'type': 'suggested',
                     'hidden': True,
                     'responses': [
+                        {
+                            'type': 'picture',
+                            'picUrl': 'http://foo.bar',
+                            'metadata': {
+                                'some': 'data'
+                            }
+                        },
                         {
                             'type': 'friend-picker',
                             'body': 'Foo',

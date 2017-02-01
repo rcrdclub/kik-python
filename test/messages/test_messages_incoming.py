@@ -2,7 +2,7 @@ from unittest import TestCase
 
 from kik.messages import VideoMessage, UnknownMessage, TextMessage, StartChattingMessage, StickerMessage, \
     ScanDataMessage, PictureMessage, LinkMessage, IsTypingMessage, ReadReceiptMessage, DeliveryReceiptMessage, \
-    SuggestedResponseKeyboard, TextResponse, FriendPickerResponse, FriendPickerMessage
+    SuggestedResponseKeyboard, TextResponse, FriendPickerResponse, PictureResponse, FriendPickerMessage
 
 
 class KikBotMessagesIncomingTest(TestCase):
@@ -75,7 +75,8 @@ class KikBotMessagesIncomingTest(TestCase):
             },
             'id': '8e7fc0ad-36aa-43dd-8c5f-e72f5f2ed7e0',
             'timestamp': 1458336131,
-            'readReceiptRequested': True
+            'readReceiptRequested': True,
+            'metadata': {'some': 'data'}
         })
 
         self.assertEqual(message.from_user, 'aleem')
@@ -88,6 +89,7 @@ class KikBotMessagesIncomingTest(TestCase):
         self.assertEqual(message.id, '8e7fc0ad-36aa-43dd-8c5f-e72f5f2ed7e0')
         self.assertEqual(message.timestamp, 1458336131)
         self.assertIs(True, message.read_receipt_requested)
+        self.assertEqual(message.metadata, {'some': 'data'})
 
     def test_video_message_incoming(self):
         message = VideoMessage.from_json({
@@ -309,6 +311,11 @@ class KikBotMessagesIncomingTest(TestCase):
                     'hidden': False,
                     'responses': [
                         {
+                            'type': 'picture',
+                            'picUrl': 'http://foo.bar',
+                            'metadata': {'some': 'data'}
+                        },
+                        {
                             'type': 'text',
                             'body': 'Ok!'
                         },
@@ -336,7 +343,8 @@ class KikBotMessagesIncomingTest(TestCase):
         self.assertEqual(message.timestamp, 1458336131)
         self.assertIs(True, message.read_receipt_requested)
         responses = [
-            TextResponse('Ok!'), TextResponse('No way!'), FriendPickerResponse('Pick a friend!', 1, 5, ['foo', 'bar'])
+            PictureResponse('http://foo.bar', {'some': 'data'}), TextResponse('Ok!'), TextResponse('No way!'),
+            FriendPickerResponse('Pick a friend!', 1, 5, ['foo', 'bar'])
         ]
         self.assertEqual(message.keyboards, [SuggestedResponseKeyboard(to='aleem', hidden=False, responses=responses)])
 

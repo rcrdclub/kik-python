@@ -5,12 +5,16 @@ class SuggestedResponse(Resource):
     """
     Base class for all responses for :class:`SuggestedResponseKeyboard<kik.messages.SuggestedResponseKeyboard>`.
     """
-    def __init__(self, type):
+    def __init__(self, type, metadata=None):
         self.type = type
+        self.metadata = metadata
 
     @classmethod
     def property_mapping(cls):
-        return {'type': 'type'}
+        return {
+            'type': 'type',
+            'metadata': 'metadata'
+        }
 
 
 class TextResponse(SuggestedResponse):
@@ -53,6 +57,25 @@ class FriendPickerResponse(SuggestedResponse):
         return mapping
 
 
+class PictureResponse(SuggestedResponse):
+    """
+    A picture response as documented on https://dev.kik.com/#/docs/messaging#picture-response-object
+    """
+    def __init__(self, pic_url, metadata):
+        super(PictureResponse, self).__init__(type='picture', metadata=metadata)
+        self.pic_url = pic_url
+
+    @classmethod
+    def property_mapping(cls):
+        mapping = super(PictureResponse, cls).property_mapping()
+
+        mapping.update({
+            'pic_url': 'picUrl'
+        })
+
+        return mapping
+
+
 class UnknownResponse(SuggestedResponse):
     """
     This response type is returned by the response factory when it encounters an unknown response type.
@@ -77,5 +100,6 @@ class UnknownResponse(SuggestedResponse):
 
 response_type_mapping = {
     'text': TextResponse,
-    'friend-picker': FriendPickerResponse
+    'friend-picker': FriendPickerResponse,
+    'picture': PictureResponse
 }

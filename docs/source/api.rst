@@ -110,6 +110,10 @@ Keyboards and Responses
    :members:
    :show-inheritance:
 
+.. autoclass:: kik.messages.PictureResponse
+   :members:
+   :show-inheritance:
+
 .. autoclass:: kik.messages.keyboard_message.KeyboardMessage
 
 Exceptions
