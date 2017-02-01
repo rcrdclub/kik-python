@@ -6,7 +6,7 @@ class Message(Resource):
     Parent class for all messages.
     """
     def __init__(self, type, to=None, id=None, chat_id=None, mention=None, participants=None, from_user=None,
-                 delay=None, read_receipt_requested=None, timestamp=None):
+                 delay=None, read_receipt_requested=None, timestamp=None, metadata=None):
         self.type = type
         self.to = to
         self.id = id
@@ -17,6 +17,7 @@ class Message(Resource):
         self.delay = delay
         self.read_receipt_requested = read_receipt_requested
         self.timestamp = timestamp
+        self.metadata = metadata
 
     @classmethod
     def property_mapping(cls):
@@ -30,5 +31,6 @@ class Message(Resource):
             'from_user': 'from',
             'delay': 'delay',
             'read_receipt_requested': 'readReceiptRequested',
-            'timestamp': 'timestamp'
+            'timestamp': 'timestamp',
+            'metadata': 'metadata'
         }

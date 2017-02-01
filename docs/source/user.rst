@@ -197,7 +197,9 @@ instances.
 
 Currently, the only supported keyboard types is
 :class:`SuggestedResponseKeyboard<kik.messages.SuggestedResponseKeyboard>`, which must be assigned a ``responses`` array
-of :class:`TextResponse<kik.messages.TextResponse>` instances.
+containing instances of classes subclassing :class:`SuggestedResponse<kik.messages.responses.SuggestedResponse>`
+(e.g. :class:`TextResponse<kik.messages.TextResponse>`, :class:`PictureResponse<kik.messages.PictureResponse>` and
+:class:`FriendPickerResponse<kik.messages.FriendPickerResponse>`).
 
    >>> from kik.messages import TextMessage, SuggestedResponseKeyboard, \
    ...     TextResponse

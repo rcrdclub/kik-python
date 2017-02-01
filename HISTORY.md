@@ -1,5 +1,9 @@
 # Release History
 
+## v1.4.0
+- Added support for metadata in suggested responses
+- Added support for picture suggested responses
+
 ## v1.3.0
 - Added the timezone to user profiles
 
