@@ -64,7 +64,7 @@ class KikApi(object):
         )
 
         if response.status_code != 200:
-            raise KikError(response.text, status_code=response.status_code)
+            raise KikError(response.text, response.status_code)
 
         return response.json()
 
@@ -105,7 +105,7 @@ class KikApi(object):
         )
 
         if response.status_code != 200:
-            raise KikError(response.text, status_code=response.status_code)
+            raise KikError(response.text, response.status_code)
 
         return response.json()
 
@@ -134,7 +134,7 @@ class KikApi(object):
         )
 
         if response.status_code != 200:
-            raise KikError(response.text, status_code=response.status_code)
+            raise KikError(response.text, response.status_code)
 
         content = response.json()
 
@@ -173,7 +173,7 @@ class KikApi(object):
         )
 
         if response.status_code != 200:
-            raise KikError(response.text, status_code=response.status_code)
+            raise KikError(response.text, response.status_code)
 
         content = response.json()
 
@@ -200,7 +200,7 @@ class KikApi(object):
         )
 
         if response.status_code != 200:
-            raise KikError(response.text, status_code=response.status_code)
+            raise KikError(response.text, response.status_code)
 
         content = response.json()
 
@@ -235,7 +235,7 @@ class KikApi(object):
         )
 
         if response.status_code != 200:
-            raise KikError(response.text, status_code=response.status_code)
+            raise KikError(response.text, response.status_code)
 
         return Configuration.from_json(response.json())
 
