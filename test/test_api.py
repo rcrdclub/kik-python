@@ -76,14 +76,18 @@ class KikBotApiTest(TestCase):
     @mock.patch('requests.post', return_value=_response(400, json.dumps({'error': 'BadRequest'}).encode('utf-8')))
     def test_send_messages_failure(self, post):
         msgs = [TextMessage(to='aleem', body='Sometext')]
-
-        self.assertRaises(KikError, self.api.send_messages, msgs)
+        with self.assertRaises(KikError) as err:
+            self.api.send_messages(msgs)
+        self.assertEqual(err.exception.message, json.dumps({'error': 'BadRequest'}).encode('utf-8'))
+        self.assertEqual(err.exception.status_code, 400)
 
     @mock.patch('requests.post', return_value=_response(400, json.dumps({'error': 'BadRequest'}).encode('utf-8')))
     def test_send_broadcast_failure(self, post):
         msgs = [TextMessage(to='aleem', body='Sometext')]
-
-        self.assertRaises(KikError, self.api.send_broadcast, msgs)
+        with self.assertRaises(KikError) as err:
+            self.api.send_broadcast(msgs)
+        self.assertEqual(err.exception.message, json.dumps({'error': 'BadRequest'}).encode('utf-8'))
+        self.assertEqual(err.exception.status_code, 400)
 
     @mock.patch('requests.get', return_value=_response(200, json.dumps({
         'firstName': 'First',
@@ -110,7 +114,10 @@ class KikBotApiTest(TestCase):
 
     @mock.patch('requests.get', return_value=_response(400, json.dumps({'error': 'BadRequest'}).encode('utf-8')))
     def test_get_user_profile_failure(self, get):
-        self.assertRaises(KikError, self.api.get_user, 'aleem')
+        with self.assertRaises(KikError) as err:
+            self.api.get_user('aleem')
+        self.assertEqual(err.exception.message, json.dumps({'error': 'BadRequest'}).encode('utf-8'))
+        self.assertEqual(err.exception.status_code, 400)
 
     @mock.patch('requests.post', return_value=_response(
         200, json.dumps({'id': 'ba7a319394f912ccad1ac42770529bd5cb0e9783'}).encode('utf-8')
@@ -152,7 +159,10 @@ class KikBotApiTest(TestCase):
 
     @mock.patch('requests.post', return_value=_response(400, json.dumps({'error': 'BadRequest'}).encode('utf-8')))
     def test_create_kik_code_failure(self, post):
-        self.assertRaises(KikError, self.api.create_code, {'akey': 'avalue'})
+        with self.assertRaises(KikError) as err:
+            self.api.create_code({'akey': 'avalue'})
+        self.assertEqual(err.exception.message, json.dumps({'error': 'BadRequest'}).encode('utf-8'))
+        self.assertEqual(err.exception.status_code, 400)
 
     @mock.patch('requests.get', return_value=_response(200, json.dumps({
         'webhook': 'https://example.com/incoming',
