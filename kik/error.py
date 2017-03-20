@@ -3,8 +3,6 @@ class KikError(Exception):
     Exception raised by all API errors.
     The exception message is set to the server's response.
 
-    :param message: The error message
-    :type message: str
     :param status_code: Status code returned by the API call
     :type status_code: int
     :param content: Content returned by the API call
