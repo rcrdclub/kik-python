@@ -78,7 +78,7 @@ class KikBotApiTest(TestCase):
         msgs = [TextMessage(to='aleem', body='Sometext')]
         with self.assertRaises(KikError) as err:
             self.api.send_messages(msgs)
-        self.assertEqual(err.exception.message, json.dumps({'error': 'BadRequest'}).encode('utf-8'))
+        self.assertEqual(str(err.exception), json.dumps({'error': 'BadRequest'}).encode('utf-8'))
         self.assertEqual(err.exception.status_code, 400)
 
     @mock.patch('requests.post', return_value=_response(400, json.dumps({'error': 'BadRequest'}).encode('utf-8')))
@@ -86,7 +86,7 @@ class KikBotApiTest(TestCase):
         msgs = [TextMessage(to='aleem', body='Sometext')]
         with self.assertRaises(KikError) as err:
             self.api.send_broadcast(msgs)
-        self.assertEqual(err.exception.message, json.dumps({'error': 'BadRequest'}).encode('utf-8'))
+        self.assertEqual(str(err.exception), json.dumps({'error': 'BadRequest'}).encode('utf-8'))
         self.assertEqual(err.exception.status_code, 400)
 
     @mock.patch('requests.get', return_value=_response(200, json.dumps({
@@ -116,7 +116,7 @@ class KikBotApiTest(TestCase):
     def test_get_user_profile_failure(self, get):
         with self.assertRaises(KikError) as err:
             self.api.get_user('aleem')
-        self.assertEqual(err.exception.message, json.dumps({'error': 'BadRequest'}).encode('utf-8'))
+        self.assertEqual(str(err.exception), json.dumps({'error': 'BadRequest'}).encode('utf-8'))
         self.assertEqual(err.exception.status_code, 400)
 
     @mock.patch('requests.post', return_value=_response(
@@ -161,7 +161,7 @@ class KikBotApiTest(TestCase):
     def test_create_kik_code_failure(self, post):
         with self.assertRaises(KikError) as err:
             self.api.create_code({'akey': 'avalue'})
-        self.assertEqual(err.exception.message, json.dumps({'error': 'BadRequest'}).encode('utf-8'))
+        self.assertEqual(str(err.exception), json.dumps({'error': 'BadRequest'}).encode('utf-8'))
         self.assertEqual(err.exception.status_code, 400)
 
     @mock.patch('requests.get', return_value=_response(200, json.dumps({
