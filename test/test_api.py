@@ -78,7 +78,7 @@ class KikBotApiTest(TestCase):
         msgs = [TextMessage(to='aleem', body='Sometext')]
         with self.assertRaises(KikError) as err:
             self.api.send_messages(msgs)
-        self.assertEqual(str(err.exception).decode('UTF-8'), json.dumps({'error': 'BadRequest'}))
+        self.assertEqual(str(err.exception), json.dumps({'error': 'BadRequest'}))
         self.assertEqual(err.exception.status_code, 400)
 
     @mock.patch('requests.post', return_value=_response(400, json.dumps({'error': 'BadRequest'}).encode('utf-8')))
