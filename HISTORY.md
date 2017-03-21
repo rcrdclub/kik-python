@@ -1,5 +1,8 @@
 # Release History
 
+## v1.4.1
+- Added status code to KikError
+
 ## v1.4.0
 - Added support for metadata in suggested responses
 - Added support for picture suggested responses

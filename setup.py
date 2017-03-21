@@ -17,7 +17,7 @@ def read(*parts):
 
 setup(
     name='kik',
-    version='1.4.0',
+    version='1.4.1',
     packages=['kik', 'kik.messages'],
     package_dir={
         'kik': 'kik',
