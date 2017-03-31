@@ -6,12 +6,21 @@ class KeyboardMessage(Message):
     """
     Parent class for messages that support keyboards.
     """
-    def __init__(self, keyboards=None, **kwargs):
+    def __init__(self, keyboards=None, chat_type=None, **kwargs):
         super(KeyboardMessage, self).__init__(**kwargs)
         if keyboards:
             self.keyboards = keyboards
         else:
             self.keyboards = []
+        self.chat_type = chat_type
+
+    @classmethod
+    def property_mapping(cls):
+        mapping = super(KeyboardMessage, cls).property_mapping()
+        mapping.update({
+            'chat_type': 'chatType'
+        })
+        return mapping
 
     def to_json(self):
         output_json = super(KeyboardMessage, self).to_json()
