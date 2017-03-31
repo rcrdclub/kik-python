@@ -1,5 +1,8 @@
 # Release History
 
+## v1.5.0
+- Added support for chatType for incoming messages
+
 ## v1.4.1
 - Added status code to KikError
 
