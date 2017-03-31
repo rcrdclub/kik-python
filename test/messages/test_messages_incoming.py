@@ -2,7 +2,7 @@ from unittest import TestCase
 
 from kik.messages import VideoMessage, UnknownMessage, TextMessage, StartChattingMessage, StickerMessage, \
     ScanDataMessage, PictureMessage, LinkMessage, IsTypingMessage, ReadReceiptMessage, DeliveryReceiptMessage, \
-    SuggestedResponseKeyboard, TextResponse, FriendPickerResponse, PictureResponse, FriendPickerMessage
+    SuggestedResponseKeyboard, TextResponse, FriendPickerResponse, FriendPickerMessage, PictureResponse
 
 
 class KikBotMessagesIncomingTest(TestCase):
@@ -15,7 +15,8 @@ class KikBotMessagesIncomingTest(TestCase):
             'body': 'Some text',
             'id': '8e7fc0ad-36aa-43dd-8c5f-e72f5f2ed7e0',
             'timestamp': 1458336131,
-            'readReceiptRequested': True
+            'readReceiptRequested': True,
+            'chatType': 'direct'
         })
 
         self.assertEqual(message.from_user, 'aleem')
@@ -24,6 +25,7 @@ class KikBotMessagesIncomingTest(TestCase):
         self.assertEqual(message.chat_id, 'c3ab8ff13720e8ad9047dd39466b3c8974e592c2fa383d4a3960714caef0c4f2')
         self.assertEqual(message.body, 'Some text')
         self.assertEqual(message.id, '8e7fc0ad-36aa-43dd-8c5f-e72f5f2ed7e0')
+        self.assertEqual(message.chat_type, 'direct')
         self.assertEqual(message.timestamp, 1458336131)
         self.assertIs(True, message.read_receipt_requested)
 
@@ -44,7 +46,8 @@ class KikBotMessagesIncomingTest(TestCase):
             },
             'id': '8e7fc0ad-36aa-43dd-8c5f-e72f5f2ed7e0',
             'timestamp': 1458336131,
-            'readReceiptRequested': True
+            'readReceiptRequested': True,
+            'chatType': 'direct'
         })
 
         self.assertEqual(message.from_user, 'aleem')
@@ -60,6 +63,7 @@ class KikBotMessagesIncomingTest(TestCase):
         self.assertEqual(message.attribution.icon_url, 'http://foo.bar/icon')
         self.assertEqual(message.id, '8e7fc0ad-36aa-43dd-8c5f-e72f5f2ed7e0')
         self.assertEqual(message.timestamp, 1458336131)
+        self.assertEqual(message.chat_type, 'direct')
         self.assertIs(True, message.read_receipt_requested)
 
     def test_picture_message_incoming(self):
@@ -76,7 +80,8 @@ class KikBotMessagesIncomingTest(TestCase):
             'id': '8e7fc0ad-36aa-43dd-8c5f-e72f5f2ed7e0',
             'timestamp': 1458336131,
             'readReceiptRequested': True,
-            'metadata': {'some': 'data'}
+            'metadata': {'some': 'data'},
+            'chatType': 'direct'
         })
 
         self.assertEqual(message.from_user, 'aleem')
@@ -89,6 +94,7 @@ class KikBotMessagesIncomingTest(TestCase):
         self.assertEqual(message.id, '8e7fc0ad-36aa-43dd-8c5f-e72f5f2ed7e0')
         self.assertEqual(message.timestamp, 1458336131)
         self.assertIs(True, message.read_receipt_requested)
+        self.assertEqual(message.chat_type, 'direct')
         self.assertEqual(message.metadata, {'some': 'data'})
 
     def test_video_message_incoming(self):
@@ -107,7 +113,8 @@ class KikBotMessagesIncomingTest(TestCase):
             },
             'id': '8e7fc0ad-36aa-43dd-8c5f-e72f5f2ed7e0',
             'timestamp': 1458336131,
-            'readReceiptRequested': True
+            'readReceiptRequested': True,
+            'chatType': 'direct'
         })
 
         self.assertEqual(message.from_user, 'aleem')
@@ -121,6 +128,7 @@ class KikBotMessagesIncomingTest(TestCase):
         self.assertEqual(message.attribution.name, 'Webpage')
         self.assertEqual(message.attribution.icon_url, 'http://foo.bar/icon')
         self.assertEqual(message.id, '8e7fc0ad-36aa-43dd-8c5f-e72f5f2ed7e0')
+        self.assertEqual(message.chat_type, 'direct')
         self.assertEqual(message.timestamp, 1458336131)
         self.assertIs(True, message.read_receipt_requested)
 
@@ -132,7 +140,8 @@ class KikBotMessagesIncomingTest(TestCase):
             'chatId': 'c3ab8ff13720e8ad9047dd39466b3c8974e592c2fa383d4a3960714caef0c4f2',
             'id': '8e7fc0ad-36aa-43dd-8c5f-e72f5f2ed7e0',
             'timestamp': 1458336131,
-            'readReceiptRequested': False
+            'readReceiptRequested': False,
+            'chatType': 'direct'
         })
 
         self.assertEqual(message.from_user, 'aleem')
@@ -141,6 +150,7 @@ class KikBotMessagesIncomingTest(TestCase):
         self.assertEqual(message.chat_id, 'c3ab8ff13720e8ad9047dd39466b3c8974e592c2fa383d4a3960714caef0c4f2')
         self.assertEqual(message.id, '8e7fc0ad-36aa-43dd-8c5f-e72f5f2ed7e0')
         self.assertEqual(message.timestamp, 1458336131)
+        self.assertEqual(message.chat_type, 'direct')
         self.assertIs(False, message.read_receipt_requested)
 
     def test_sticker_message_incoming(self):
@@ -153,7 +163,8 @@ class KikBotMessagesIncomingTest(TestCase):
             'stickerUrl': 'http://cards-sticker-dev.herokuapp.com/stickers/memes/okay.png',
             'id': '8e7fc0ad-36aa-43dd-8c5f-e72f5f2ed7e0',
             'timestamp': 1458336131,
-            'readReceiptRequested': False
+            'readReceiptRequested': False,
+            'chatType': 'direct'
         })
 
         self.assertEqual(message.from_user, 'aleem')
@@ -164,6 +175,7 @@ class KikBotMessagesIncomingTest(TestCase):
         self.assertEqual(message.sticker_url, 'http://cards-sticker-dev.herokuapp.com/stickers/memes/okay.png')
         self.assertEqual(message.id, '8e7fc0ad-36aa-43dd-8c5f-e72f5f2ed7e0')
         self.assertEqual(message.timestamp, 1458336131)
+        self.assertEqual(message.chat_type, 'direct')
         self.assertIs(False, message.read_receipt_requested)
 
     def test_scan_data_message_incoming(self):
@@ -175,7 +187,8 @@ class KikBotMessagesIncomingTest(TestCase):
             'data': 'foobar',
             'id': '8e7fc0ad-36aa-43dd-8c5f-e72f5f2ed7e0',
             'timestamp': 1458336131,
-            'readReceiptRequested': False
+            'readReceiptRequested': False,
+            'chatType': 'direct'
         })
 
         self.assertEqual(message.from_user, 'aleem')
@@ -185,6 +198,7 @@ class KikBotMessagesIncomingTest(TestCase):
         self.assertEqual(message.data, 'foobar')
         self.assertEqual(message.id, '8e7fc0ad-36aa-43dd-8c5f-e72f5f2ed7e0')
         self.assertEqual(message.timestamp, 1458336131)
+        self.assertEqual(message.chat_type, 'direct')
         self.assertIs(False, message.read_receipt_requested)
 
     def test_is_typing_incoming(self):
@@ -196,7 +210,8 @@ class KikBotMessagesIncomingTest(TestCase):
             'isTyping': True,
             'id': '8e7fc0ad-36aa-43dd-8c5f-e72f5f2ed7e0',
             'timestamp': 1458336131,
-            'readReceiptRequested': False
+            'readReceiptRequested': False,
+            'chatType': 'direct'
         })
 
         self.assertEqual(message.from_user, 'aleem')
@@ -205,6 +220,7 @@ class KikBotMessagesIncomingTest(TestCase):
         self.assertEqual(message.chat_id, 'c3ab8ff13720e8ad9047dd39466b3c8974e592c2fa383d4a3960714caef0c4f2')
         self.assertIs(True, message.is_typing)
         self.assertEqual(message.id, '8e7fc0ad-36aa-43dd-8c5f-e72f5f2ed7e0')
+        self.assertEqual(message.chat_type, 'direct')
         self.assertEqual(message.timestamp, 1458336131)
         self.assertIs(False, message.read_receipt_requested)
 
@@ -259,7 +275,8 @@ class KikBotMessagesIncomingTest(TestCase):
             'picked': ['foobar'],
             'id': '8e7fc0ad-36aa-43dd-8c5f-e72f5f2ed7e0',
             'timestamp': 1458336131,
-            'readReceiptRequested': False
+            'readReceiptRequested': False,
+            'chatType': 'direct'
         })
 
         self.assertEqual(message.from_user, 'aleem')
@@ -269,6 +286,7 @@ class KikBotMessagesIncomingTest(TestCase):
         self.assertEqual(message.picked, ['foobar'])
         self.assertEqual(message.id, '8e7fc0ad-36aa-43dd-8c5f-e72f5f2ed7e0')
         self.assertEqual(message.timestamp, 1458336131)
+        self.assertEqual(message.chat_type, 'direct')
         self.assertIs(False, message.read_receipt_requested)
 
     def test_unknown_message_incoming(self):
